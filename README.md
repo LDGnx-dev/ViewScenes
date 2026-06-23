@@ -1,16 +1,48 @@
-# React + Vite
+# Sakura Twilight — 3D Interactive Diorama
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Un diorama tridimensional que representa un paisaje contemplativo bajo un cerezo japonés (*Sakura*). El proyecto transiciona orgánicamente a través de tres fases temporales (Día, Tarde y Noche) mientras dos figuras contemplan el entorno iluminadas por corazones
 
-Currently, two official plugins are available:
+Desarrollado con **React Three Fiber (R3F)** y **Three.js**, optimizado para garantizar tasas de refresco estables en dispositivos móviles.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Características Principales
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Simulación Dinámica de Viento:** Sistema de partículas vegetativas que reaccionan a ondas senoidales en tiempo real.
+- **Ciclo de Luz Orgánico:** Transición suavizada (*lerp*) de iluminación ambiental, direccional y materiales adaptativos según la fase del día.
+- **Atmósfera Lumínica:** Nubes procedurales volumétricas y emisores de luz de neón focalizados en los núcleos del diorama.
+- **Estética Minimalista:** Siluetas integradas en el entorno tridimensional.
 
-## Expanding the ESLint configuration
+## Optimizaciones para Web Móvil
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Para asegurar un rendimiento fluido a 60 FPS estables en dispositivos sin comprometer la densidad visual se implementaron las siguientes técnicas gráficas:
+
+1. **Instanciación por Clúster (Geometría Unificada):** En lugar de renderizar más de 22,000 instancias individuales de geometría de césped, se diseñó un ramillete compuesto estático de 3 briznas por nodo. Esto redujo los ciclos del bucle en la CPU en un **80%**, manteniendo una densidad idéntica con solo 4,500 instancias JSX.
+2. **Gestión del Buffer de Profundidad (`renderOrder`):** Control estricto de las capas de dibujo de WebGL para forzar al césped a cubrir parcialmente la base de las figuras en primer plano de forma nativa, evitando cálculos pesados de colisión tridimensional.
+3. **Control de Z-Fighting:** Muestreo esférico controlado con desfases milimétricos en el eje vertical (`y`) para los pétalos caídos en la colina.
+
+## Stack Tecnológico
+
+- **Framework Principal:** React (Vite)
+- **Gráficos 3D:** Three.js
+- **Abstracción React:** @react-three/fiber
+- **Matemáticas Vectoriales:** Multiplicación matricial nativa de Three.js
+
+---
+
+## Instalación y Desarrollo Local
+
+Clona el repositorio e instala las dependencias para ejecutar el entorno de desarrollo local:
+
+```bash
+# Clonar el proyecto
+git clone [https://github.com/TU_USUARIO/TU_REPOSITORIO.git](https://github.com/TU_USUARIO/TU_REPOSITORIO.git)
+
+# Entrar al directorio
+cd tu-repositorio
+
+# Instalar dependencias
+npm install
+
+# Correr servidor local (Vite)
+npm run dev

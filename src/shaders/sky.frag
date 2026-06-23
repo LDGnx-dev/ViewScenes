@@ -1,5 +1,5 @@
 uniform float uTransition;
-uniform vec2 uCloudOffset; // Uniform inyectado para la aleatoriedad por recarga
+uniform vec2 uCloudOffset;
 varying vec2 vUv;
 
 float hash21(vec2 p) {
@@ -60,16 +60,12 @@ void main() {
     float cloudFactor = 1.0 - nightFactor;
     
     if (cloudFactor > 0.01) {
-        // CORRECCIÓN: Bajamos la frecuencia a 1.4 en X para que las nubes sean enormes
-        // E inyectamos uCloudOffset para romper el patrón fijo en cada carga
         vec2 cloudUv = vec2(vUv.x * 1.4, vUv.y * 3.2) + uCloudOffset;
         
         float d = fbm(cloudUv);
-        // Ajustamos la densidad de la máscara para mayor visibilidad
         float cloudMask = smoothstep(0.35, 0.62, d * (vUv.y + 0.35));
         
         if (cloudMask > 0.0) {
-            // Falso volumen por relieve sombreado desplazado
             float dShadow = fbm(cloudUv + vec2(-0.05, -0.06));
             float shadowDetail = smoothstep(0.35, 0.65, dShadow);
             

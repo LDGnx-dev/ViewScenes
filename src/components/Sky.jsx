@@ -11,7 +11,6 @@ export default function Sky({ phase }) {
     return new THREE.Vector2(Math.random() * 120.0, Math.random() * 120.0);
   }, []);
 
-  // Uniforms limpios: Eliminamos por completo moonTex y saturnTex corruptos
   const uniforms = useMemo(() => ({
     uTransition: { value: 0.0 },
     uTime: { value: 0.0 },
@@ -21,14 +20,12 @@ export default function Sky({ phase }) {
   useFrame((state, delta) => {
     if (!materialRef.current) return;
     
-    // Mantenemos uTime activo para el ciclo del motor gráfico
     materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
 
     let target = 0.0;
     if (phase === 'SUNSET') target = 0.4;
     if (phase === 'NIGHT') target = 1.0;
     
-    // Animación fluida de transiciones cinematográficas
     materialRef.current.uniforms.uTransition.value = THREE.MathUtils.lerp(
       materialRef.current.uniforms.uTransition.value,
       target,

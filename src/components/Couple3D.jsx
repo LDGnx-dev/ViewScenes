@@ -10,10 +10,7 @@ function StylizedHeart({ color, position, intensity, bobSeed }) {
   useFrame((state) => {
     if (!heartRef.current) return;
     const t = state.clock.getElapsedTime();
-    
-    // Movimiento vertical suave independiente usando el bobSeed
     heartRef.current.position.y = position[1] + Math.sin(t * 1.5 + bobSeed) * 0.025;
-    // Giro milimétrico magnético
     heartRef.current.rotation.y = Math.sin(t * 0.8 + bobSeed) * 0.08;
   });
 
@@ -37,7 +34,6 @@ function StylizedHeart({ color, position, intensity, bobSeed }) {
         <meshStandardMaterial color={color} emissive={color} emissiveIntensity={intensity * 10.0} />
       </mesh>
 
-      {/* Rastro luminoso de neón suave en el entorno */}
       <pointLight 
         intensity={intensity * 1.8} 
         distance={2.5} 
@@ -51,7 +47,6 @@ function StylizedHeart({ color, position, intensity, bobSeed }) {
 export default function Couple3D({ globalTransition }) {
   const group = useRef();
 
-  // Color adaptativo integrado a la penumbra nocturna
   const adaptiveColor = useMemo(() => {
     const sunsetTone = new THREE.Color('#1f0f0c');
     const nightTone  = new THREE.Color('#121622'); // Azul noche nítido
@@ -65,10 +60,8 @@ export default function Couple3D({ globalTransition }) {
   }, [globalTransition]);
 
   return (
-    // Posición y altura fija que ya habías calibrado perfectamente
     <group ref={group} position={[0, 0, 0]} scale={[1, 1, 1]} renderOrder={2}>
       
-      {/* ================= CHICO: PIXEL (IZQUIERDA - ESTABLE Y FIJO) ================= */}
       <group position={[0.15, 0, 0]} rotation={[0, Math.PI - 0.05, 0]}>
         {/* Cabeza */}
         <mesh position={[0, 0.55, 0]}>
@@ -82,13 +75,13 @@ export default function Couple3D({ globalTransition }) {
           <meshBasicMaterial color={adaptiveColor} />
         </mesh>
 
-        {/* Torso restaurado al 100% y estático */}
+        {/* Torso */}
         <mesh position={[0, 0.25, -0.01]} rotation={[-0.14, 0, -0.02]}>
           <cylinderGeometry args={[0.065, 0.08, 0.34, 12]} />
           <meshBasicMaterial color={adaptiveColor} />
         </mesh>
 
-        {/* TU CORAZÓN: MORADO (#BF00FF) CON ANIMACIÓN */}
+        {/* CORAZÓN: MORADO (#BF00FF) CON ANIMACIÓN */}
         <StylizedHeart 
           color="#bf00ff" 
           position={[0, 0.76, -0.02]} 
@@ -113,7 +106,6 @@ export default function Couple3D({ globalTransition }) {
         </mesh>
       </group>
 
-      {/* ================= CHICA: TSUKI (DERECHA - ESTABLE Y FIJA) ================= */}
       <group position={[0.31, -0.01, 0.02]} rotation={[0, Math.PI + 0.05, 0.08]}>
         {/* Cabeza */}
         <mesh position={[0, 0.51, 0]}>
@@ -127,13 +119,13 @@ export default function Couple3D({ globalTransition }) {
           <meshBasicMaterial color={adaptiveColor} />
         </mesh>
 
-        {/* Torso restaurado al 100% y estático */}
+        {/* Torso */}
         <mesh position={[0, 0.23, -0.01]} rotation={[-0.12, 0, 0.02]}>
           <cylinderGeometry args={[0.048, 0.095, 0.32, 12]} />
           <meshBasicMaterial color={adaptiveColor} />
         </mesh>
 
-        {/* SU CORAZÓN: VERDE (#39FF14) CON ANIMACIÓN */}
+        {/* CORAZÓN: VERDE (#39FF14) CON ANIMACIÓN */}
         <StylizedHeart 
           color="#39ff14" 
           position={[0.01, 0.72, -0.03]} 

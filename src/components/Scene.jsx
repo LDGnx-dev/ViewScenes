@@ -5,7 +5,7 @@ import Tree from './Tree';
 import Sky from './Sky';
 import Couple3D from './Couple3D';
 
-// Componente WindyGrass con Geometría de Ramillete Avanzada y RenderOrder Forzado
+// Componente WindyGrass
 function WindyGrass({ count = 5000, grassColor }) {
   const meshRef = useRef();
   const dummy = useMemo(() => new THREE.Object3D(), []);
@@ -87,7 +87,6 @@ function WindyGrass({ count = 5000, grassColor }) {
   });
 
   return (
-    // CORRECCIÓN: RenderOrder alto para obligar al césped a pintarse encima de la pareja
     <instancedMesh ref={meshRef} args={[clusterGeometry, null, count]} renderOrder={4}>
       <meshStandardMaterial color={grassColor} roughness={0.9} depthWrite={true} depthTest={true} />
     </instancedMesh>
@@ -171,11 +170,6 @@ function Hill({ globalTransition }) {
 
       <WindyGrass count={4500} grassColor={colors.grass} />
       <FallenPetals count={400} petalColor={colors.petal} />
-
-      {/* CORRECCIÓN INTERNA CRÍTICA: La pareja ahora vive dentro del espacio de la colina, 
-          lo que hereda el escalado automático. Ponemos un eje local Z adelantado (0.22) 
-          para que los ramilletes frontales queden físicamente en su primer plano.
-      */}
       <group position={[0.07, 0.94, 0.22]} scale={[0.18, 0.71, 0.4]}>
         <Couple3D globalTransition={globalTransition} isLocal={true} />
       </group>

@@ -56,7 +56,6 @@ function BranchPetals({ count = 8 }) {
   });
 
   return (
-    // CORRECCIÓN DIRECTA: La ref debe estar amarrada estrictamente al instancedMesh
     <instancedMesh ref={mesh} args={[null, null, count]} renderOrder={2}>
       <sphereGeometry args={[0.5, 8, 8]} />
       <meshStandardMaterial color="#ff9ebb" roughness={0.6} metalness={0.0} />

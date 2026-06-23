@@ -1,5 +1,4 @@
 export default function Silhouettes({ phase }) {
-  // Solo se muestran en la fase NIGHT
   if (phase !== 'NIGHT') return null;
 
   return (
